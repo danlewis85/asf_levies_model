@@ -420,15 +420,19 @@ if st.button("Generate my scenario! 🤖"):
     st.markdown(f"**{scenario_name} levy rates**")
     scenario_levies = _rebalance_levies(levies, weights, denominators, scenario_name)
     levy_rate_frame = {
-        "Levy": [levy.name for levy in levies],
+        "Levy": [levy.name for levy in scenario_levies],
         "Electricity, variable rate (£/MWh)": [
-            levy.electricity_variable_rate for levy in levies
+            levy.electricity_variable_rate for levy in scenario_levies
         ],
         "Electricity, fixed rate (£/customer)": [
-            levy.electricity_fixed_rate for levy in levies
+            levy.electricity_fixed_rate for levy in scenario_levies
         ],
-        "Gas, variable rate (£/MWh)": [levy.gas_variable_rate for levy in levies],
-        "Gas, fixed rate (£/customer)": [levy.gas_fixed_rate for levy in levies],
+        "Gas, variable rate (£/MWh)": [
+            levy.gas_variable_rate for levy in scenario_levies
+        ],
+        "Gas, fixed rate (£/customer)": [
+            levy.gas_fixed_rate for levy in scenario_levies
+        ],
     }
     levy_rate_frame = pd.DataFrame(levy_rate_frame)
     st.write(pd.DataFrame(levy_rate_frame))
@@ -466,7 +470,7 @@ if st.button("Generate my scenario! 🤖"):
     st.markdown(
         "*Hover over the table below to download using the 'Download as CSV' button.*"
     )
-    st.markdown(f"**{scenario_name} Results")
+    st.markdown(f"**{scenario_name} Results**")
     st.write(summary_data)
 
     # Summary figure - Dot plot
